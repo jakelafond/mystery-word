@@ -6,6 +6,27 @@
   </head>
   <body>
     <h1>MYSTERY WORD</h1>
+    {{#gameMode}}
+    <h2>Please choose a difficulty:</h2>
+    <div class="wrapper">
+      <span>
+        <form class="" action="/easy" method="post">
+          <button class="mode" type="submit" name="button">Easy</button>
+        </form>
+      </span>
+      <span>
+        <form class="" action="/normal" method="post">
+          <button class="mode" type="submit" name="button">Normal</button>
+        </form>
+      </span>
+      <span>
+        <form class="" action="/hard" method="post">
+          <button class="mode" type="submit" name="button">Hard</button>
+        </form>
+      </span>
+    </div>
+    {{/gameMode}}
+    {{^gameMode}}
     <h3>You have {{counter}} guesses left.</h3>
     <p>
       {{#underscores}}
@@ -39,5 +60,6 @@
         {{/guesses}}
       </span>
     </p>
+    {{/gameMode}}
   </body>
 </html>

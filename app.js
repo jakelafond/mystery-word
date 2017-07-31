@@ -17,22 +17,62 @@ app.engine('mustache', mustacheExpress());
 app.set('views', './views');
 app.set('view engine', 'mustache');
 
-let normalWord = function() {
+let randomWord = function() {
   let i = Math.floor(Math.random() * words.length);
   return words[i];
 };
 
 app.get('/', (req, res) => {
+  let gameMode = '.';
+  res.render('index', { gameMode });
+});
+
+app.get('/easy', (req, res) => {
   counter = 8;
   guesses = [];
   play = '.';
-  let newWord = normalWord();
-  secretWord = newWord.split('');
+  let easyWord = randomWord();
+  while (easyWord.length < 1 || easyWord.length > 5) {
+    easyWord = randomWord();
+  }
+  secretWord = easyWord.split('');
   underscores = secretWord.map((x, index) => {
     return (x = '_');
   });
   res.render('index', { underscores, guesses, counter, secretWord, play });
-  console.log(newWord);
+  console.log(easyWord);
+});
+
+app.get('/normal', (req, res) => {
+  counter = 8;
+  guesses = [];
+  play = '.';
+  let normalWord = randomWord();
+  while (normalWord.length < 5 || normalWord.length > 8) {
+    normalWord = randomWord();
+  }
+  secretWord = normalWord.split('');
+  underscores = secretWord.map((x, index) => {
+    return (x = '_');
+  });
+  res.render('index', { underscores, guesses, counter, secretWord, play });
+  console.log(normalWord);
+});
+
+app.get('/hard', (req, res) => {
+  counter = 8;
+  guesses = [];
+  play = '.';
+  let hardWord = randomWord();
+  while (hardWord.length < 8) {
+    hardWord = randomWord();
+  }
+  secretWord = hardWord.split('');
+  underscores = secretWord.map((x, index) => {
+    return (x = '_');
+  });
+  res.render('index', { underscores, guesses, counter, secretWord, play });
+  console.log(hardWord);
 });
 
 app.post('/', (req, res) => {
@@ -71,7 +111,7 @@ app.post('/', (req, res) => {
         guesses.push(req.body.guess);
       }
     }
-    //run this block to determine game state (lose, still playing, win)
+    //run this block to determine what game state (lose, still playing, win)
     if (counter === 0) {
       let youLose = 'l';
       res.render('index', { underscores, guesses, counter, secretWord, youLose });
@@ -86,6 +126,18 @@ app.post('/', (req, res) => {
 
 app.post('/playagain', (req, res) => {
   res.redirect('/');
+});
+
+app.post('/easy', (req, res) => {
+  res.redirect('/easy');
+});
+
+app.post('/normal', (req, res) => {
+  res.redirect('/normal');
+});
+
+app.post('/hard', (req, res) => {
+  res.redirect('/hard');
 });
 
 app.listen(3000, () => {
