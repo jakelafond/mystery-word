@@ -5,21 +5,39 @@
     <title>Mystery Word</title>
   </head>
   <body>
-<h1>MYSTERY WORD</h1>
-<h3>You have {{counter}} guesses left.</h3>
-<p>
-  {{#underscores}}
-  {{.}}
-  {{/underscores}}
-</p>
-<form class="" action="/" method="post">
-  <input type="text" name="guess" value=""><button type="submit" name="button">Make a guess</button>
-</form>
-<p>Letters guessed:
-  <span>{{#guesses}}
-  {{.}}
-  {{/guesses}}
-</span>
-</p>
+    <h1>MYSTERY WORD</h1>
+    <h3>You have {{counter}} guesses left.</h3>
+    <p>
+      {{#underscores}}
+      {{.}}
+      {{/underscores}}
+    </p>
+    {{#youWin}}
+      <h1>Congrats you won!</h1>
+      <form class="" action="/playagain" method="post">
+        <button type="submit" name="button">Play again?</button>
+      </form>
+    {{/youWin}}
+    {{#youLose}}
+      <p>You Lost! The final word is: </p> {{#secretWord}}{{.}} {{/secretWord}}</p>
+      <form class="" action="/play" method="post">
+        <button type="submit" name="button">Play again?</button>
+      </form>
+    {{/youLose}}
+    {{#play}}
+      <form class="" action="/" method="post">
+        <input type="text" name="guess" value=""><button type="submit" name="button">Make a guess</button>
+      </form>
+    {{#errors}}
+      <p style="color:red">{{msg}}</p>
+    {{/errors}}
+    {{/play}}
+    <p>Letters guessed:
+      <span>
+        {{#guesses}}
+          {{.}}
+        {{/guesses}}
+      </span>
+    </p>
   </body>
 </html>

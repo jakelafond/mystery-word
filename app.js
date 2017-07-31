@@ -6,9 +6,8 @@ const expressValidator = require('express-validator');
 const fs = require('fs');
 const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toLowerCase().split('\n');
 let underscores = [];
-let guesses = [];
-let counter = 8;
 var secretWord = [];
+let play = '';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,34 +22,69 @@ let normalWord = function() {
   return words[i];
 };
 
-let newWord = normalWord();
-console.log(newWord);
-
-for (let x = 0; x < newWord.length; x++) {
-  underscores.push('_');
-}
-for (let j = 0; j < newWord.length; j++) {
-  secretWord.push(newWord[j]);
-}
-
-console.log(secretWord);
-
 app.get('/', (req, res) => {
-  res.render('index', { underscores: underscores, guesses: guesses, counter: counter });
+  counter = 8;
+  guesses = [];
+  play = '.';
+  let newWord = normalWord();
+  secretWord = newWord.split('');
+  underscores = secretWord.map((x, index) => {
+    return (x = '_');
+  });
+  res.render('index', { underscores, guesses, counter, secretWord, play });
+  console.log(newWord);
 });
 
 app.post('/', (req, res) => {
-  if (secretWord.includes(req.body.guess)) {
-    for (let q = 0; q < secretWord.length; q++) {
-      if (secretWord[q] === req.body.guess) {
-        underscores.splice(q, 1, req.body.guess);
+  //check for errors
+  req
+    .checkBody('guess', 'You must enter a single alpha character to make a guess.')
+    .notEmpty()
+    .isLength(0, 1)
+    .isAlpha();
+  var errors = req.validationErrors();
+
+  if (errors) {
+    var html = errors;
+    console.log(errors);
+    res.render('index', { underscores, guesses, counter, secretWord, play, errors });
+  } else if (guesses.includes(req.body.guess)) {
+    errors = { msg: 'You already guessed that character, pick again!' };
+    res.render('index', { underscores, guesses, counter, secretWord, play, errors });
+  } else {
+    //no errors so run this block to do guess logic while counter != 0
+    if (counter != 0) {
+      if (secretWord.includes(req.body.guess)) {
+        underscores = secretWord.map((letter, index) => {
+          if (letter === req.body.guess) {
+            return (letter = req.body.guess);
+          } else if (underscores[index] === letter) {
+            return letter;
+          } else {
+            return (letter = '_');
+          }
+        });
+        guesses.push(req.body.guess);
+      } else {
+        counter -= 1;
+        console.log(counter);
+        guesses.push(req.body.guess);
       }
     }
-  } else {
-    counter -= 1;
-    console.log(counter);
+    //run this block to determine game state (lose, still playing, win)
+    if (counter === 0) {
+      let youLose = 'l';
+      res.render('index', { underscores, guesses, counter, secretWord, youLose });
+    } else if (underscores.includes('_')) {
+      res.render('index', { underscores, guesses, counter, play });
+    } else if (underscores.includes('-') === false) {
+      let youWin = 'w';
+      res.render('index', { underscores, guesses, counter, youWin });
+    }
   }
-  guesses.push(req.body.guess);
+});
+
+app.post('/playagain', (req, res) => {
   res.redirect('/');
 });
 
