@@ -35,12 +35,18 @@
     </p>
     {{#youWin}}
       <h1>Congrats you won!</h1>
+      <p>Want to join the hall of fame? Enter your name and click submit below.</p>
+      <form class="" action="/winners" method="post">
+        <input type="text" name="username" value="" placeholder="Your Name Here:">
+        <button type="submit" name="button">Submit</button>
+      </form>
+      <p>Skip hall of fame and just play again:</p>
       <form class="" action="/playagain" method="post">
         <button type="submit" name="button">Play again?</button>
       </form>
     {{/youWin}}
     {{#youLose}}
-      <p>You Lost! The final word is: </p> {{#secretWord}}{{.}} {{/secretWord}}</p>
+      <p>You Lost! The final word is: {{#secretWord}}{{.}}{{/secretWord}}</p> 
       <form class="" action="/playagain" method="post">
         <button type="submit" name="button">Play again?</button>
       </form>

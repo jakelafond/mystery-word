@@ -140,6 +140,11 @@ app.post('/hard', (req, res) => {
   res.redirect('/hard');
 });
 
+app.post('/winners', (req, res) => {
+  let username = req.body.username;
+  res.render('winners', { username });
+});
+
 app.listen(3000, () => {
   console.log('Your app is running!');
 });
