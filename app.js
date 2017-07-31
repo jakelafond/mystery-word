@@ -47,8 +47,8 @@ app.post('/', (req, res) => {
       }
     }
   } else {
-    count -= 1;
-    console.log(count);
+    counter -= 1;
+    console.log(counter);
   }
   guesses.push(req.body.guess);
   res.redirect('/');
