@@ -20,7 +20,7 @@
     {{/youWin}}
     {{#youLose}}
       <p>You Lost! The final word is: </p> {{#secretWord}}{{.}} {{/secretWord}}</p>
-      <form class="" action="/play" method="post">
+      <form class="" action="/playagain" method="post">
         <button type="submit" name="button">Play again?</button>
       </form>
     {{/youLose}}
@@ -29,7 +29,7 @@
         <input type="text" name="guess" value=""><button type="submit" name="button">Make a guess</button>
       </form>
     {{#errors}}
-      <p style="color:red">{{msg}}</p>
+      <p style="color:red; font-weight:bold;">{{msg}}</p>
     {{/errors}}
     {{/play}}
     <p>Letters guessed:
