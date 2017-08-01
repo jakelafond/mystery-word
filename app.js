@@ -52,7 +52,6 @@ app.get('/easy', (req, res) => {
     return (x = '_');
   });
   res.render('index', { underscores, guesses, counter, secretWord, play });
-  console.log(easyWord);
 });
 
 app.get('/normal', (req, res) => {
@@ -68,7 +67,6 @@ app.get('/normal', (req, res) => {
     return (x = '_');
   });
   res.render('index', { underscores, guesses, counter, secretWord, play });
-  console.log(normalWord);
 });
 
 app.get('/hard', (req, res) => {
@@ -84,7 +82,6 @@ app.get('/hard', (req, res) => {
     return (x = '_');
   });
   res.render('index', { underscores, guesses, counter, secretWord, play });
-  console.log(hardWord);
 });
 
 app.post('/', (req, res) => {
@@ -98,7 +95,6 @@ app.post('/', (req, res) => {
 
   if (errors) {
     var html = errors;
-    console.log(errors);
     res.render('index', { underscores, guesses, counter, secretWord, play, errors });
   } else if (guesses.includes(req.body.guess)) {
     errors = { msg: 'You already guessed that character, pick again!' };
@@ -119,7 +115,6 @@ app.post('/', (req, res) => {
         guesses.push(req.body.guess);
       } else {
         counter -= 1;
-        console.log(counter);
         guesses.push(req.body.guess);
       }
     }
@@ -156,7 +151,6 @@ app.post('/winners', (req, res) => {
   const userSessionName = req.session.userSessionName || [];
   winners.push(req.body.username);
   req.session.userSessionName = winners;
-  console.log(winners);
   res.render('winners', { winners });
 });
 
