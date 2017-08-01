@@ -10,6 +10,7 @@ var path = require('path');
 let underscores = [];
 var secretWord = [];
 let play = '';
+let winners = [];
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -153,10 +154,10 @@ app.post('/hard', (req, res) => {
 
 app.post('/winners', (req, res) => {
   const userSessionName = req.session.userSessionName || [];
-  userSessionName.push(req.body.username);
-  req.session.userSessionName = userSessionName;
-  console.log(userSessionName);
-  res.render('winners', { userSessionName });
+  winners.push(req.body.username);
+  req.session.userSessionName = winners;
+  console.log(winners);
+  res.render('winners', { winners });
 });
 
 app.listen(3000, () => {
