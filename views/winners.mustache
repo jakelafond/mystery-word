@@ -3,10 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Mystery Word Winners</title>
+    <link href="https://fonts.googleapis.com/css?family=Mystery+Quest" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-{{#username}}
-<h1>{{.}}</h1>
-{{/username}}
+    <div class="test">
+      {{#userSessionName}}
+      <h2 class="winner">{{.}}</h1>
+      {{/userSessionName}}
+      <form class="" action="/playagain" method="post">
+        <button type="submit" name="button">Play again</button>
+      </form>
+    </div>
   </body>
 </html>

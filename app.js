@@ -3,8 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const mustacheExpress = require('mustache-express');
 const expressValidator = require('express-validator');
-const fs = require('fs');
+const fs = require('fs-extra');
 const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toLowerCase().split('\n');
+const expressSession = require('express-session');
+var path = require('path');
 let underscores = [];
 var secretWord = [];
 let play = '';
@@ -12,10 +14,19 @@ let play = '';
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
+app.use(
+  expressSession({
+    secret: 'notsosecure',
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
 app.engine('mustache', mustacheExpress());
-app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'mustache');
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 let randomWord = function() {
   let i = Math.floor(Math.random() * words.length);
@@ -141,8 +152,11 @@ app.post('/hard', (req, res) => {
 });
 
 app.post('/winners', (req, res) => {
-  let username = req.body.username;
-  res.render('winners', { username });
+  const userSessionName = req.session.userSessionName || [];
+  userSessionName.push(req.body.username);
+  req.session.userSessionName = userSessionName;
+  console.log(userSessionName);
+  res.render('winners', { userSessionName });
 });
 
 app.listen(3000, () => {

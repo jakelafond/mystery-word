@@ -1,0 +1,75 @@
+h1 {
+  font-size: 3em;
+  color: red;
+  background-color: #e4e6e7;
+  width: 45vw;
+  margin: 5px auto;
+  border: solid 2px gray;
+  border-radius: 50%;
+}
+h2,
+h3 {
+  background-color: #e4e6e7;
+  width: 25vw;
+  margin: 5px auto;
+  border: solid 2px gray;
+  border-radius: 5px;
+}
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
+  width: 100vw;
+}
+.smallwrapper {
+  text-align: center;
+  width: 100vw;
+}
+body {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-family: 'Mystery Quest', cursive;
+  background-image: url('./questionmark.jpg');
+  background-size: cover;
+  margin: 0px;
+}
+.test {
+  background-image: url('./winners.jpg');
+  background-size: cover;
+  height: 100vh;
+}
+button {
+  font-size: 1em;
+  background-color: #e4e6e7;
+  width: 7em;
+  margin: 5px auto;
+  border: solid 2px gray;
+  border-radius: 5px;
+}
+span {
+  margin: 5px;
+}
+input {
+  margin: 5px;
+}
+p {
+  background-color: #e4e6e7;
+  width: 30vw;
+  margin: 5px auto;
+  border: solid 2px gray;
+  border-radius: 5px;
+}
+.winner {
+  color: red;
+  width: 20vw;
+  margin: 5px auto;
+  border: solid 2px gray;
+  border-radius: 5px;
+}
+.lost {
+  color: red;
+  font-size: 1em;
+}
