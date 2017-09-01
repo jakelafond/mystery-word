@@ -1,7 +1,7 @@
 h1 {
   font-size: 3em;
   color: red;
-  background-color: #e4e6e7;
+  background-color: #f6fcff;
   width: 45vw;
   margin: 5px auto;
   border: solid 2px gray;
@@ -9,7 +9,7 @@ h1 {
 }
 h2,
 h3 {
-  background-color: #e4e6e7;
+  background-color: #f6fcff;
   width: 25vw;
   margin: 5px auto;
   border: solid 2px gray;
@@ -43,7 +43,7 @@ body {
 }
 button {
   font-size: 1em;
-  background-color: #e4e6e7;
+  background-color: #f6fcff;
   width: 7em;
   margin: 5px auto;
   border: solid 2px gray;
@@ -56,7 +56,7 @@ input {
   margin: 5px;
 }
 p {
-  background-color: #e4e6e7;
+  background-color: #f6fcff;
   width: 30vw;
   margin: 5px auto;
   border: solid 2px gray;
